@@ -1,49 +1,26 @@
 <?php
+setcookie('ciao', 'non so', time() - 24 * 60 * 60);//serce ad elliminare un cookie metto un giorno  nel passato
 
-class Form
-{
-    private $html = '';
-    private $method;
-    private $action;
+include './Form.php';
 
-    public function __construct($method, $action)
-    {
-        $this->method = $method;
-        $this->action = $action;
-    }
+// form 1 in questo modo assegno i parametri al mio imput e decido il metodo e dove essere reindirizzato
+$myForm1 = new Form('GET', './');
+$myForm1->addLabel('Name', 'name');
+$myForm1->addInput('text', 'name', 'name');
+$myForm1->addLabel('Age', 'age');
+$myForm1->addInput('number', 'age', 'age', 18);
+$myForm1->addSumbit('Invia dati');
 
-    public function addLabel($type, $id)
-    {
-        $this->html .= "<label for='$id'>$type:</label><br>";
-    }
 
-    public function addInput($type, $name, $value, $id)
-    {
-        $this->html .= "<input type='$type' name='$name' value='$value' id='$id'><br>";
-    }
-
-    public function render()
-    {
-        echo "<form method='{$this->method}' action='{$this->action}'>";
-        echo $this->html;
-        echo "<input type='submit' value='Submit'>";
-        echo "</form>";
-    }
-}
-
-$myForm = new Form('POST', 'action.php');
-
-$myForm->addLabel('Name', 'id-for1');
-$myForm->addInput('text', 'name', '', 'id-for1');
-
-$myForm->addLabel('Surname', 'id-for2');
-$myForm->addInput('text', 'surname', '', 'id-for2');
-
-$myForm->addLabel('Email', 'id-for3');
-$myForm->addInput('text', 'email', '', 'id-for2');
-
-$myForm->addLabel('Age', 'id-for4');
-$myForm->addInput('text', 'age', '', 'id-for2');
+// form 2
+$myForm2 = new Form('POST', '/add-product.php');
+$myForm2->addLabel('Product ID', 'pid');
+$myForm2->addInput('text', 'pid', 'pid');
+$myForm2->addLabel('Price', 'price');
+$myForm2->addInput('number', 'price', 'price');
+$myForm2->addLabel('Password', 'pass');
+$myForm2->addInput('password', 'pass', 'pass');
+$myForm2->addSumbit('Add product');
 ?>
 
 <!DOCTYPE html>
@@ -52,11 +29,16 @@ $myForm->addInput('text', 'age', '', 'id-for2');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Form OOP</title>
 </head>
 
 <body>
-    <?php $myForm->render(); ?>
+    <h1>Forms</h1>
+    <h2>Form 1</h2>
+    <!-- in questo modo chiamo la funzione per fare vedere il mio form creato dalla classa a oggetti -->
+    <?= $myForm1->render(); ?> 
+    <h2>Form 2</h2>
+    <?= $myForm2->render(); ?>
 </body>
 
 </html>

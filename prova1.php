@@ -84,7 +84,7 @@ class Form
     
    
     <?php     
-    $form = new Form('/process.php', 'POST');
+    $form = new Form('./', 'POST');
     $form->addField('nome', 'text', 'Nome', 'Enter your name');
     $form->addField('cognome', 'text', 'Cognome', 'Enter your surname');
     $form->addField('email', 'email', 'Email', 'Enter your email');
